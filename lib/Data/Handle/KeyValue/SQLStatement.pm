@@ -26,6 +26,7 @@ has bind => (
     is      => 'ro',
     isa     => 'ArrayRef',
     handles => { _all_bind => 'elements' },
+    default => sub { [] },
 );
 
 has _sth => (
