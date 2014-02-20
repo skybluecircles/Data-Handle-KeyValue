@@ -119,7 +119,7 @@ __PACKAGE__->meta()->make_immutable();
 
 =head1 DESCRIPTION
 
-The modules in Data::Handle::KeyValue provide a consistent interface for fetching rows of hashrefs. In particular Data::Handle::KeyValue::CSV does so for a CSV file.
+The modules in Data::Handle::KeyValue provide a consistent interface for fetching rows of hash refs. In particular Data::Handle::KeyValue::CSV does so for a CSV file.
 
 =head1 CONSTRUCTION
 
@@ -127,14 +127,14 @@ The modules in Data::Handle::KeyValue provide a consistent interface for fetchin
 
 Takes one required parameter: path_to_csv which, as you can see, is the path to the csv file you would like to read.
 
-Also requires one of the following two parameters: header or column_names. If Perl evaluates header to be true, it uses the first line of the file to get the keys for the columns. If header is false, this module expects you to pass the column names explicitly as an array ref for the column_names attribute.
+Also requires one of the following two parameters: header or column_names. If Perl evaluates header to be true, this module uses the first line of the file to get the keys for the columns. If header is false, this module expects you to pass the column names explicitly as an array ref for the column_names attribute.
 
-Optionally, you may pass a hashref for csv_params. This module uses Text::CSV to read the csv file, so csv_params is passed directly to Text::CSV. If this is not passed, the defaults for Text::CSV are used.
+Optionally, you may pass a hash ref for csv_params. This module uses Text::CSV to read the csv file, so csv_params is passed directly to Text::CSV. If csv_params is not passed, the defaults for Text::CSV are used.
 
 =head1 METHODS
 
 =head2 next_row
 
-Fetches the next row of your csv file and returns it as a hashref.
+Fetches the next row of your csv file and returns it as a hash ref.
 
 =cut

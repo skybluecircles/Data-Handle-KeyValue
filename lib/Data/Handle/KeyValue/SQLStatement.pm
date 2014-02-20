@@ -80,7 +80,7 @@ __PACKAGE__->meta()->make_immutable();
 
 =head1 DESCRIPTION
 
-The modules in Data::Handle::KeyValue provide a consistent interface for fetching rows of hashrefs. In particular Data::Handle::KeyValue::SQLStatement does so for a SQL table in a RDBMS.
+The modules in Data::Handle::KeyValue provide a consistent interface for fetching rows of hash refs. In particular Data::Handle::KeyValue::SQLStatement does so for a SQL table in a RDBMS.
 
 =head1 CONSTRUCTION
 
@@ -94,6 +94,6 @@ Also takes one optional parameter as an array reference: bind_values.
 
 =head2 next_row
 
-Fetches the next row from your table and returns it as a hashref.
+Fetches the next row from your table and returns it as a hash ref.
 
 =cut
