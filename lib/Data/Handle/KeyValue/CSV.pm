@@ -93,3 +93,46 @@ sub next_row {
 __PACKAGE__->meta()->make_immutable();
 
 1;
+
+=pod
+
+=head1 SYNOPSIS
+
+  use Data::Handle::KeyValue::CSV;
+
+  my $file       = '/path/to/foo.csv';
+  my $csv_params = { ... };
+
+  my $header      = 1;
+  my $data_handle = Data::Handle::KeyValue::CSV->new(
+      file       => $file,
+      csv_params => $csv_params,
+      header     => $header,
+  );
+
+  my $column_names = [ ... ];
+  my $data_handle  = Data::Handle::KeyValue::CSV->new(
+      file         => $file,
+      csv_params   => $csv_params,
+      column_names => $column_names,
+  );
+
+=head1 DESCRIPTION
+
+The modules in Data::Handle::KeyValue provide a consistent interface for fetching rows of hashrefs. In particular Data::Handle::KeyValue::CSV does so for a CSV file.
+
+=head1 CONSTRUCTION
+
+=head2 new
+
+Takes two required parameters: file and csv_params. File is the path to the csv file and csv_params is a hashref which is passed directly to Text::CSV;
+
+Also takes one of the following two params: header or column_names. If Perl evaluates header to be true, it uses the first line of the file to get the keys for the columns. If header is false, this module expects you to pass this explicitly as an array ref to column_names.
+
+=head1 METHODS
+
+=head2 next_row
+
+Fetches the next row of your csv file and returns it as a hashref.
+
+=cut
