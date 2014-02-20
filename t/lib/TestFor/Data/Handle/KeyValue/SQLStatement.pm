@@ -15,9 +15,12 @@ sub test_sql_statement {
         = DBI->connect( "dbi:SQLite:dbname=$database", q{}, q{},
         { RaiseError => 1 },
         ) or die "Could not connect to $database: $DBI::errstr";
-    my $statement = 'SELECT date, distance FROM travel_log';
+    my $sql_statement = 'SELECT date, distance FROM travel_log';
 
-    my $data_handle = Data::Handle::KeyValue::SQLStatement->new( dbh => $dbh, statement => $statement );
+    my $data_handle = Data::Handle::KeyValue::SQLStatement->new(
+        dbh           => $dbh,
+        sql_statement => $sql_statement
+    );
 
     $self->_test_data_handle( $data_handle, 'sql statement' );
 }
