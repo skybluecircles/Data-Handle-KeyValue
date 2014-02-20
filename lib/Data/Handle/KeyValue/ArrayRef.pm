@@ -29,11 +29,12 @@ __PACKAGE__->meta()->make_immutable();
 
   use Data::Handle::KeyValue::ArrayRef;
 
-  my $array_ref = [ ... ];
-  my $data_handle = Data::Handle::KeyValue::ArrayRef->new( array_ref => $array_ref );
+  my $array_ref = [...];
+  my $data_handle
+      = Data::Handle::KeyValue::ArrayRef->new( array_ref => $array_ref );
 
   while ( my $row = $data_handle->next_row() ) {
-      ...
+      ...;
   }
 
 =head1 DESCRIPTION
