@@ -15,7 +15,7 @@ use Moose;
 
 with 'Data::Handle::Role::KeyValue';
 
-has file => (
+has path_to_csv => (
     is  => 'ro',
     isa => 'Str',
 );
@@ -55,7 +55,7 @@ has _csv => (
 sub _build_file_handle {
     my $self = shift;
 
-    open( my $fh, '<', $self->file ) or die "Could not open csv file: $!";
+    open( my $fh, '<', $self->path_to_csv ) or die "Could not open csv file: $!";
 
     return $fh;
 }
@@ -100,19 +100,19 @@ __PACKAGE__->meta()->make_immutable();
 
   use Data::Handle::KeyValue::CSV;
 
-  my $file       = '/path/to/foo.csv';
-  my $csv_params = { ... };
+  my $path_to_csv = '/path/to/foo.csv';
+  my $csv_params  = { ... };
 
   my $header      = 1;
   my $data_handle = Data::Handle::KeyValue::CSV->new(
-      file       => $file,
-      csv_params => $csv_params,
-      header     => $header,
+      path_to_csv => $path_to_csv,
+      csv_params  => $csv_params,
+      header      => $header,
   );
 
   my $column_names = [ ... ];
   my $data_handle  = Data::Handle::KeyValue::CSV->new(
-      file         => $file,
+      path_to_csv  => $path_to_csv,
       csv_params   => $csv_params,
       column_names => $column_names,
   );
@@ -125,9 +125,11 @@ The modules in Data::Handle::KeyValue provide a consistent interface for fetchin
 
 =head2 new
 
-Takes two required parameters: file and csv_params. File is the path to the csv file and csv_params is a hashref which is passed directly to Text::CSV;
+Takes one required parameter: path_to_csv which, as you can see, is the path to the csv file you would like to read.
 
-Also takes one of the following two params: header or column_names. If Perl evaluates header to be true, it uses the first line of the file to get the keys for the columns. If header is false, this module expects you to pass this explicitly as an array ref to column_names.
+Also requires one of the following two parameters: header or column_names. If Perl evaluates header to be true, it uses the first line of the file to get the keys for the columns. If header is false, this module expects you to pass the column names explicitly as an array ref for the column_names attribute.
+
+Optionally, you may pass a hashref for csv_params. This module uses Text::CSV to read the csv file, so csv_params is passed directly to Text::CSV. If this is not passed, the defaults for Text::CSV are used.
 
 =head1 METHODS
 
