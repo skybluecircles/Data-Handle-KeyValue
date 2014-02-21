@@ -15,10 +15,8 @@ around BUILDARGS => sub {
     my $dbh = $params{dbh};
     delete $params{dbh};
 
-    my @args = %params;
-
     my ( $table, $columns, $where, $order ) = validated_list(
-        \@args,
+        [%params],
         table   => { isa => 'Str' },
         columns => { isa => 'ArrayRef' },
         where   => { isa => 'HashRef', optional => 1 },
