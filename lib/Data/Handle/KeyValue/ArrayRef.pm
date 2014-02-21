@@ -53,4 +53,9 @@ Takes a single required attribute called C<array_ref> which must be a reference 
 
 Fetches the next element from the array you've referenced. This element is expected to be a hash ref.
 
+=head1 SEE ALSO
+
+L<Data::Handle::KeyValue::CSV>
+L<Data::Handle::KeyValue::SQLStatement>
+
 =cut
