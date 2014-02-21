@@ -96,4 +96,9 @@ Also takes one optional parameter as an array reference: C<bind_values>.
 
 Fetches the next row from your table and returns it as a hash ref.
 
+=head1 SEE ALSO
+
+L<Data::Handle::KeyValue::ArrayRef>
+L<Data::Handle::KeyValue::CSV>
+
 =cut

@@ -138,4 +138,9 @@ Optionally, you may pass a hash ref for C<csv_params>. This module uses L<Text::
 
 Fetches the next row of your csv file and returns it as a hash ref.
 
+=head1 SEE ALSO
+
+L<Data::Handle::KeyValue::ArrayRef>
+L<Data::Handle::KeyValue::SQLStatement>
+
 =cut
