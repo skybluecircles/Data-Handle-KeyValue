@@ -11,7 +11,7 @@ use namespace::autoclean;
 use Text::CSV;
 
 use Moose;
-
+extends 'Data::Handle::KeyValue';
 with 'Data::Handle::Role::KeyValue';
 
 has path_to_csv => (

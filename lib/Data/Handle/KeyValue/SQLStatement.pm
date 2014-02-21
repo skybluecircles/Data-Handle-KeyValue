@@ -9,6 +9,7 @@ use autodie qw(:all);
 use namespace::autoclean;
 
 use Moose;
+extends 'Data::Handle::KeyValue';
 
 has dbh => (
     is      => 'ro',

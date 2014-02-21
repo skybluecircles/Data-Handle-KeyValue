@@ -1,3 +1,14 @@
+package Data::Handle::KeyValue;
+
+use namespace::autoclean;
+
+use Moose;
+use MooseX::StrictConstructor;
+
+__PACKAGE__->meta()->make_immutable();
+
+1;
+
 =pod
 
 =head1 SYNOPSIS
