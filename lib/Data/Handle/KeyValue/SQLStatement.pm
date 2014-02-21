@@ -80,19 +80,19 @@ __PACKAGE__->meta()->make_immutable();
 
 =head1 DESCRIPTION
 
-The modules in Data::Handle::KeyValue provide a consistent interface for fetching rows of hash refs. In particular Data::Handle::KeyValue::SQLStatement does so for a SQL table in a RDBMS.
+The modules in L<Data::Handle::KeyValue> provide a consistent interface for fetching rows of hash refs. In particular Data::Handle::KeyValue::SQLStatement does so for a SQL table in a RDBMS.
 
 =head1 CONSTRUCTION
 
-=head2 new
+=head2 C<new>
 
-Takes two required paramaters: dbh and sql_statement. dbh is a DBI database handle and sql_statement is just your sql statement as a string. It can have placeholders.
+Takes two required paramaters: C<dbh> and C<sql_statement>. C<dbh> is a L<DBI> database handle and C<sql_statement> is just your sql statement as a string. It can have placeholders.
 
-Also takes one optional parameter as an array reference: bind_values.
+Also takes one optional parameter as an array reference: C<bind_values>.
 
 =head1 METHODS
 
-=head2 next_row
+=head2 C<next_row>
 
 Fetches the next row from your table and returns it as a hash ref.
 

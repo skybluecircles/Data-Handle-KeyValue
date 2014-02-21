@@ -39,17 +39,17 @@ __PACKAGE__->meta()->make_immutable();
 
 =head1 DESCRIPTION
 
-The modules in Data::Handle::KeyValue provide a consistent interface for fetching rows of hash refs. In particular Data::Handle::KeyValue::ArrayRef does so for an array ref which already exists in Perl.
+The modules in L<Data::Handle::KeyValue> provide a consistent interface for fetching rows of hash refs. In particular Data::Handle::KeyValue::ArrayRef does so for an array ref which already exists in Perl.
 
 =head1 CONSTRUCTOR
 
-=head2 new
+=head2 C<new>
 
-Takes a single required attribute called array_ref which must be a reference to an array.
+Takes a single required attribute called C<array_ref> which must be a reference to an array.
 
 =head1 METHODS
 
-=head2 next_row
+=head2 C<next_row>
 
 Fetches the next element from the array you've referenced. This element is expected to be a hash ref.
 
