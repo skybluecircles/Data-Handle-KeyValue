@@ -3,15 +3,14 @@ package TestRole::Data::Handle;
 use Moose::Role;
 use Test::More;
 
-has expected_values => (
+has expected_rows => (
     traits  => ['Array'],
     is      => 'ro',
     isa     => 'ArrayRef',
-    builder => '_build_expected_values',
-    handles => { get_expected_row => 'get' },
+    builder => '_build_expected_rows',
 );
 
-sub _build_expected_values {
+sub _build_expected_rows {
     return [
         { date => '2013-07-05', distance => 20, },
         { date => '2013-07-06', distance => 15, },
@@ -31,10 +30,13 @@ sub _test_data_handle {
     my $data_handle = shift;
     my $type        = shift;
 
-    for ( my $i = 0; my $row = $data_handle->next_row(); $i++ ) {
-        my $expected_row = $self->get_expected_row( $i );
-        is_deeply( $row, $expected_row, "Got expected row for $type" );
+    my @retrieved_rows;
+    while ( my $row = $data_handle->next_row() ) {
+        push @retrieved_rows, $row;
     }
+
+    is_deeply( \@retrieved_rows, $self->expected_rows,
+        "Got expected rows for $type" );
 }
 
 1;
