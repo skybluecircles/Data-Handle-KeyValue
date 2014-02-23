@@ -3,7 +3,7 @@ package TestFor::Data::Handle::KeyValue::CSV;
 use Data::Handle::KeyValue::CSV;
 use Test::Class::Moose;
 
-with 'TestRole::Data::Handle';
+with 'TestRole::Data::Handle::KeyValue';
 
 sub test_csv_with_header {
     my $self = shift;

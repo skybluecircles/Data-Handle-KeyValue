@@ -5,7 +5,7 @@ use DBD::SQLite;
 use DBI;
 
 use Test::Class::Moose;
-with 'TestRole::Data::Handle';
+with 'TestRole::Data::Handle::KeyValue';
 
 sub test_sql_statement {
     my $self = shift;

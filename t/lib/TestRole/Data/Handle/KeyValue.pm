@@ -1,4 +1,4 @@
-package TestRole::Data::Handle;
+package TestRole::Data::Handle::KeyValue;
 
 use Moose::Role;
 use Test::More;

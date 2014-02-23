@@ -3,7 +3,7 @@ package TestFor::Data::Handle::KeyValue::ArrayRef;
 use Data::Handle::KeyValue::ArrayRef;
 use Test::Class::Moose;
 
-with 'TestRole::Data::Handle';
+with 'TestRole::Data::Handle::KeyValue';
 
 sub test_arrayref {
     my $self = shift;
