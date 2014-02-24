@@ -33,8 +33,9 @@ has csv_params => (
 );
 
 has column_names => (
-    is  => 'ro',
-    isa => 'ArrayRef',
+    is      => 'ro',
+    isa     => 'ArrayRef',
+    default => sub { [] },
 );
 
 has header => (
@@ -51,6 +52,22 @@ has _csv => (
     handles  => { _getline_hr => 'getline_hr', },
 );
 
+around BUILDARGS => sub {
+    my $orig  = shift;
+    my $class = shift;
+
+    my %params = @_;
+
+    my $column_names = $params{column_names};
+    my $header       = $params{header};
+
+    unless ( $column_names xor $header ) {
+        die "You must pass one of 'column_names' or 'header' but not both\n";
+    }
+
+    return $class->$orig( %params );
+};
+
 sub _build_file_handle {
     my $self = shift;
 
@@ -66,18 +83,10 @@ sub _build_csv {
     my $csv = Text::CSV->new( $self->csv_params )
         or die "Could not create new Text::CSV object: $!";
 
-    my $column_names;
-    if ( $self->header ) {
-        $column_names = $csv->getline( $self->_file_handle );
-    }
-    elsif ( $self->column_names ) {
-        $column_names = $self->column_names;
-    }
-    else {
-        die
-            "Please pass either the CSV's column names or a true value for the 'header' attribute."
-            ; # I should really check at construction to make sure that either header or column_names is passed rather than here in the builder
-    }
+    my $column_names
+        = $self->header
+        ? $csv->getline( $self->_file_handle )
+        : $self->column_names;
 
     $csv->column_names( @{$column_names} );
 
