@@ -127,6 +127,10 @@ __PACKAGE__->meta()->make_immutable();
       column_names => $column_names,
   );
 
+  while ( my $row = $data_handle->next_row() ) {
+      ...
+  }
+
 =head1 DESCRIPTION
 
 The modules in L<Data::Handle::KeyValue> provide a consistent interface for fetching rows of hash refs. In particular Data::Handle::KeyValue::CSV does so for a CSV file.
