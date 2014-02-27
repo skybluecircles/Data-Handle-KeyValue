@@ -2,7 +2,7 @@ package TestFor::Data::Handle::KeyValue::CSV;
 
 use Data::Handle::KeyValue::CSV;
 use Test::Class::Moose;
-use Try::Tiny;
+use Test::Fatal;
 
 with 'TestRole::Data::Handle::KeyValue';
 
@@ -35,52 +35,44 @@ sub test_csv_without_header {
 }
 
 sub test_column_names_xor_header {
-    my $path_to_csv  = 'foo.csv';
+    my $path_to_csv = 'foo.csv';
     my $column_names = [ 'date', 'distance' ];
-    my $header       = 1;
 
-    my $fatal_error;
-    try {
-        my $data_handle = Data::Handle::KeyValue::CSV->new(
-            path_to_csv  => $path_to_csv,
-            column_names => $column_names,
-            header       => $header
-        );
-    }
-    catch {
-        $fatal_error = $_;
-    }
-    finally {
-        my $expected_error
-            = "You must pass one of 'column_names' or 'header' but not both\n";
-        is( $fatal_error, $expected_error,
-            "Raised exception when both 'column_names' and 'header' are passed"
-        );
-    };
+    my $expected
+        = "You must pass one of 'column_names' or 'header' but not both\n";
+    my $message
+        = "Raised exception when both 'column_names' and 'header' are passed";
+
+    is( exception {
+            Data::Handle::KeyValue::CSV->new(
+                path_to_csv  => $path_to_csv,
+                column_names => $column_names,
+                header       => 1,
+            );
+        },
+        $expected,
+        $message,
+    );
 }
 
 sub test_empty_file {
-    my $test = shift;
-
     my $path_to_csv = 't/test-data/empty.csv';
     my $header      = 1;
 
-    my $exception;
-    try {
-        my $data_handle = Data::Handle::KeyValue::CSV->new(
-            path_to_csv => $path_to_csv,
-            header      => $header,
-        );
-    }
-    catch {
-        $exception = $_;
-    }
-    finally {
-        my $expected
-            = "Your csv file at '$path_to_csv' contains no header - is your file empty?\n";
-        is( $exception, $expected,
-            'Raised exception when asked to parse header for an empty file' );
-    };
+    my $expected
+        = "Your csv file at '$path_to_csv' contains no header - is your file empty?\n";
+    my $message
+        = 'Raised exception when asked to parse header for an empty file';
+
+    is( exception {
+            Data::Handle::KeyValue::CSV->new(
+                path_to_csv => $path_to_csv,
+                header      => $header,
+            );
+        },
+        $expected,
+        $message,
+    );
 }
 
 1;
