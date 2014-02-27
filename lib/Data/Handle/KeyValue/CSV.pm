@@ -35,7 +35,8 @@ has csv_params => (
 has column_names => (
     is      => 'ro',
     isa     => 'ArrayRef',
-    default => sub { [] },
+    builder => '_build_column_names',
+    lazy    => 1,
 );
 
 has header => (
@@ -47,8 +48,8 @@ has _csv => (
     is       => 'ro',
     isa      => 'Text::CSV',
     builder  => '_build_csv',
-    init_arg => undef,
     lazy     => 1,
+    init_arg => undef,
     handles  => { _getline_hr => 'getline_hr', },
 );
 
@@ -66,7 +67,21 @@ around BUILDARGS => sub {
     }
 
     return $class->$orig( %params );
+
+    # note: if I didn't require 'header' to be set explicity and just relied
+    # on the truth of 'column_names', someone who didn't know this and didn't
+    # pass 'column_names' would have the first line of their csv read in as
+    # the header, creating hard-to-diagnose, unexpected behaviour
 };
+
+sub BUILD {
+    my $self = shift;
+
+    $self->_csv->column_names( $self->column_names );
+
+    # After construction, we tell the Text::CSV object what the column_names
+    # are via the 'column_names' attribute
+}
 
 sub _build_file_handle {
     my $self = shift;
@@ -83,15 +98,19 @@ sub _build_csv {
     my $csv = Text::CSV->new( $self->csv_params )
         or die "Could not create new Text::CSV object: $!";
 
-    my $column_names
-        = $self->header
-        ? $csv->getline( $self->_file_handle )
-        : $self->column_names;
-
-    $csv->column_names( @{$column_names} );
-
     return $csv;
+}
 
+sub _build_column_names {
+
+    # So, if 'column_names' is passed, great, we'll use that.
+    # If not, we read in the first line of the csv via this builder.
+
+    my $self = shift;
+
+    my $column_names = $self->_csv->getline( $self->_file_handle );
+
+    return $column_names;
 }
 
 sub next_row {
