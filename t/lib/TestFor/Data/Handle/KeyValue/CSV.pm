@@ -59,4 +59,28 @@ sub test_column_names_xor_header {
     };
 }
 
+sub test_empty_file {
+    my $test = shift;
+
+    my $path_to_csv = 't/test-data/empty.csv';
+    my $header      = 1;
+
+    my $exception;
+    try {
+        my $data_handle = Data::Handle::KeyValue::CSV->new(
+            path_to_csv => $path_to_csv,
+            header      => $header,
+        );
+    }
+    catch {
+        $exception = $_;
+    }
+    finally {
+        my $expected
+            = "Your csv file at '$path_to_csv' contains no header - is your file empty?\n";
+        is( $exception, $expected,
+            'Raised exception when asked to parse header for an empty file' );
+    };
+}
+
 1;

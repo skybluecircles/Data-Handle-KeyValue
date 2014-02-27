@@ -89,16 +89,16 @@ sub _build_file_handle {
     open( my $fh, '<', $self->path_to_csv )
         or die "Could not open csv file: $!";
 
+    # If I ever add a 'skip_row' attribute, use it here
+
     return $fh;
 }
 
 sub _build_csv {
     my $self = shift;
 
-    my $csv = Text::CSV->new( $self->csv_params )
+    return Text::CSV->new( $self->csv_params )
         or die "Could not create new Text::CSV object: $!";
-
-    return $csv;
 }
 
 sub _build_column_names {
@@ -108,9 +108,10 @@ sub _build_column_names {
 
     my $self = shift;
 
-    my $column_names = $self->_csv->getline( $self->_file_handle );
-
-    return $column_names;
+    return $self->_csv->getline( $self->_file_handle )
+        || die sprintf(
+        "Your csv file at '%s' contains no header - is your file empty?\n",
+        $self->path_to_csv );
 }
 
 sub next_row {
